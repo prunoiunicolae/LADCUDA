@@ -34,6 +34,10 @@ int main()
     // Kernel invocation with one block of N * N * 1 threads
     int numBlocks = 1;
     dim3 threadsPerBlock(N, N);
+    size_t size = N* sizeof(float);
+    int* d_A;
+    cudaMalloc(&d_A, size);
+    cudaMemcpy(d_A, *a, size, cudaMemcpyHostToDevice);
     for(k=1;k<N;k++)
 		royFloyd<<<numBlocks, threadsPerBlock>>>(a,k);
 	int i,j;
